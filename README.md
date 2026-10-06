@@ -74,20 +74,34 @@ python .\dingtalk\send_dingtalk_safety_tip.py --dry-run
 
 工作流会从 `dingtalk/image-library.json` 的 `enabled=true` 条目中随机抽取一张图片。
 
-当前图片的 `publicUrl` 留空，工作流会自动把它拼成：
+当前图片的 `publicUrl` 留空时，工作流会自动把它拼成：
 
 ```text
 https://raw.githubusercontent.com/<仓库>/<分支>/dingtalk/images/<图片文件>
 ```
 
-因此图片文件必须提交到**公开仓库**，钉钉才能读取 Raw 地址。如果仓库是私有仓库，图片地址无法被钉钉访问，需要把 `publicUrl` 改成其他公网图片地址，或者在仓库 Variables 中增加 `DINGTALK_IMAGE_BASE_URL` 并调整工作流。
+因此图片文件必须提交到**公开仓库**，钉钉才能读取 Raw 地址。如果仓库是私有仓库，或群成员所在网络无法访问 GitHub Raw，可以填写 `shareUrl`。脚本会在消息中发送“点击查看安全提示图片”链接，而不是把分享页面当作图片嵌入。
+
+例如使用夸克网盘分享页：
+
+```json
+{
+  "name": "道路安全头盔提示",
+  "localPath": "dingtalk/images/微信图片_20261002003042_69_63.png",
+  "publicUrl": "",
+  "shareUrl": "https://pan.quark.cn/s/你的分享编号",
+  "enabled": true
+}
+```
+
+`shareUrl` 必须是无需把钉钉当作图片加载的网页分享地址。使用分享页时，消息中的链接需要点击后查看图片；如果分享链接设置了有效期或提取码，到期或需要验证后消息链接可能无法打开。
 
 以后增加图片：
 
 1. 把图片放进 `dingtalk/images/`；
 2. 在 `dingtalk/image-library.json` 增加条目；
 3. 设置 `enabled` 为 `true`；
-4. 如果使用 GitHub Raw，`publicUrl` 可以留空，脚本会自动生成；
+4. 使用 GitHub Raw 时，`publicUrl` 可以留空，脚本会自动生成；使用网盘分享页时填写 `shareUrl`；
 5. 提交后无需修改定时任务。
 
 ## 运行边界
