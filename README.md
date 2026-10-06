@@ -9,7 +9,7 @@
 - Webhook 和加签密钥放在 GitHub Actions Secrets，不写入代码；
 - 图片库放在仓库中，公开仓库可以直接使用 GitHub Raw 地址显示图片。
 
-当前仓库截图显示的是 `vanish2000-AI/HomeAppt-master`。建议把本目录中的内容复制到该仓库根目录；不要把 `DINGTALK_WEBHOOK_URL` 或加签密钥写进仓库文件。
+本项目使用独立的 GitHub 仓库 `vanish2000-AI/-`。请将本目录中的内容按下方目录结构上传到该仓库根目录，不要上传到 `HomeAppt-master`；也不要把 `DINGTALK_WEBHOOK_URL` 或加签密钥写进仓库文件。
 
 ## 需要放进仓库的文件
 
@@ -59,7 +59,7 @@ cron: '30 0 * * *'
 
 ## 手动测试
 
-上传工作流后，进入仓库的 `Actions` 页面，选择 **DingTalk daily safety tip**，点击 **Run workflow**。
+上传工作流后，进入仓库的 `Actions` 页面，选择 **DingTalk daily safety tip**，点击 **Run workflow**。这里使用的是 GitHub Actions 页面，不是 GitHub Pages。
 
 这会真实发送一条钉钉消息。首次测试前确认 Webhook、关键词和 `@所有人` 设置。
 
